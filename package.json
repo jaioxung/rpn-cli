@@ -4,12 +4,18 @@
   "description": "A postfix notation calculator",
   "main": "bin/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Jason Billingsley",
   "license": "MIT",
   "bin": {
     "rpn-cli": "bin/index.js"
   },
-  "keywords": []
+  "keywords": [],
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "jest": "^28.1.2"
+  }
 }
