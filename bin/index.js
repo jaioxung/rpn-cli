@@ -3,18 +3,16 @@
 const readline = require('readline');
 const rl = readline.createInterface({input: process.stdin, output: process.stdout});
 
-const env = 'cli';
 const operators = ['+', '-', '*', '/'];
 const allowedStrings = ['q','c','ac','v','stack','help'];
-const invalidOutputs = [null, NaN, Infinity, undefined];
+const invalidOutputs = [null, undefined];
 let v = false;
 let stack = [];
 
-if(env === 'cli') {
-    sendOutput("RPN Calculator \n" +
-        "You may input you operands and operators one at a time or as a single string with each separated by a space.\n" +
-        "Enter 'help' for list of commands\n");
-}
+
+sendOutput("RPN Calculator \n" +
+    "You may input you operands and operators one at a time or as a single string with each separated by a space.\n" +
+    "Enter 'help' for list of commands\n");
 
 awaitInput();
 
@@ -27,7 +25,7 @@ function awaitInput () {
 
 function processInput (inputString) {
     const inputParts = inputString.split(" ");
-    inputParts.forEach((part) => {
+    for(let part of inputParts) {
         if(!validInputPart(part)) {
             // throw error
             sendOutput('invalid input');
@@ -42,7 +40,7 @@ function processInput (inputString) {
         } else {
             pushOnToStack(part);
         }
-    });
+    }
 
     let output = stack[stack.length - 1];
     validOutput(output) ? sendOutput(output) : stack.pop();
@@ -85,7 +83,6 @@ function performCommand (part) {
             stack.pop();
             break;
         case 'ac':
-            env === 'cli' ? console.clear() : null;
             stack.length = 0;
             break;
         case 'v':
@@ -96,7 +93,7 @@ function performCommand (part) {
             printApplicationHelp();
             break;
         case 'stack':
-            sendOutput(stack);
+            sendOutput('[' + stack.join() + ']');
             break;
     }
     return true;
@@ -138,11 +135,7 @@ function printOperation (x, y, operator) {
 }
 
 function sendOutput (output) {
-    switch(env) {
-        case 'cli':
-            console.log(output);
-            break;
-    }
+    process.stdout.write(output + "\n");
 }
 
 function exitApplication () {
