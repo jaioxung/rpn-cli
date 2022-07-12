@@ -5,11 +5,14 @@ let v = false;
 let stack = [];
 
 function processInput(inputString) {
-    const inputParts = inputString.split(" ");
+    const inputParts = inputString.split(" ").filter(part => part !== '');
+    console.log(inputParts);
+    let output;
     for (let part of inputParts) {
         if (!validInputPart(part)) {
             // throw error
             sendOutput('invalid input');
+            return 'invalid input';
 
         } else if (allowedStrings.includes(part)) {
             performCommand(part);
@@ -23,7 +26,7 @@ function processInput(inputString) {
         }
     }
 
-    let output = stack[stack.length - 1];
+    output = stack[stack.length - 1];
     validOutput(output) ? sendOutput(output) : stack.pop();
 
     return output;
@@ -51,7 +54,7 @@ function performOperation(operator, stack) {
             result = y / x;
             break;
     }
-    v ? printOperation(x, y, operator) : null;
+    if(v) printOperation(x, y, operator);
     stack.push(result);
 }
 

@@ -1,5 +1,8 @@
 const rpnCalculator = require('./rpn-calculator');
 
+test('input: string result: invalid input', () => {
+    expect(rpnCalculator.processInput('string')).toBe('invalid input');
+});
 
 test('input: 12 result: 12', () => {
     expect(rpnCalculator.processInput('12')).toBe(12);
